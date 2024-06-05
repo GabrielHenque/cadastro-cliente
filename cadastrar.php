@@ -9,13 +9,14 @@
 <body>
     <div id="cadastro">
         <h1>Cadastro De Clientes</h1>
-        <form action="processa_cadastro.php" method="POST"></form>
+        <form action="processa.php" method="POST">
         <input type="text" name="nome" id="nome" placeholder="nome">
         <input type="email" name="email" id="email" placeholder="E-mail">
         <input type="text" name="telefone" id="telefone" placeholder="Telefone">
-        <textarea name="msg" id="msg" placeholder="Descrição"></textarea>
+        <textarea name="descricao" id="descricao" placeholder="Descrição"></textarea>
         <button id="btn">Enviar</button>
         <h6 id="botão-voltar"><a href="index.php">Index</a></h6>
+        </form>
     </div>
 </body>
 </html>
