@@ -10,7 +10,7 @@
 </head>
 <body>
     <a href="cadastrar.php">Cadastrar</a>
-    <a href="#">Linkar</a>
+    <a href="cliente.php">Linkar</a>
 
 </body>
 </html>
