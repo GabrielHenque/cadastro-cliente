@@ -1,48 +1,31 @@
 <?php
-    // Verificara se o cliente foi selecionado para edição
-    if (isset($_GET["id"])) {
-        $cliente_id = $_GET["id"];
 
-    // Conexão com o Banco de Dados
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "bd_cadastro";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+    // Processamento do formulário para edição
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $novo_nome = $_POST["nome"];
+    $novo_email = $_POST["email"];
+    $novo_telefone = $_POST["telefone"];
+    $novo_descricao = $_POST["descricao"];
 
-    if ($conn->connect_error) {
-        die("Erro na Conexão com o Banco de Dados: " . $conn->$connect_error);
+    // Query SQL para atualizar os dados do cliente
+    $sql = "UPDATE clientes SET nome = :novo_nome, email = :novo_email, telefone = :novo_telefone, descricao = :novo_descricao WHERE id = :cliente_id";
+    $stmt = $pdo->prepare($sql);
+
+    // Bind dos parâmetros
+    $stmt->bindParam(':novo_nome', $novo_nome, PDO::PARAM_STR);
+    $stmt->bindParam(':novo_email', $novo_email, PDO::PARAM_STR);
+    $stmt->bindParam(':novo_telefone', $novo_telefone, PDO::PARAM_STR);
+    $stmt->bindParam(':novo_descricao', $novo_descricao, PDO::PARAM_STR);
+    $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
+
+    // Executa a atualização
+    try {
+        $stmt->execute();
+        echo "Dados do cliente atualizados com sucesso.";
+    } catch (PDOException $e) {
+        echo "Erro ao atualizar dados do cliente: " . $e->getMessage();
     }
-
-    // Obter os Dados do Client para edição
-    $sql = "SELECT * FROM clientes WHERE id = $cliente_id";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows == 1) {
-        $rows = $result->fetch_assoc();
-    }
-
-    else {
-        echo "Cliente nâo encontrado.";
-        exit;
-    }
-
-    // Processa o Formulario pra ediçâo
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $novo_nome = $_POST["nome"];
-        $novo_email = $_POST["email"];
-        $novo_telefone = $_POST["telefone"];
-        $novo_descricao = $_POST["descricao"];
-
-        // Atualizar os dados do cliente no Banco de Dados
-        $sql = "UPDATE clientes SET nome = '$novo_nome', email = '$novo_email', telefone = '$novo_telefone', descricao = '$novo_descricao' WHERE id = $cliente_id";
-
-    }
-
-    }
-
-
-
+}
 
 ?>
